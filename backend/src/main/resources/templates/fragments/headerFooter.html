@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <header th:fragment="header">
+      <div class="navigation">
+        <a th:href="@{/movie}">Movies</a>
+        <a th:href="@{/tv}">Tv Shows</a>
+        <a th:href="@{/anime}">Anime</a>
+      </div>
+      <h2>My movie database</h2>
+    </header>
+
+    <footer th:fragment="footer" class="footer">
+      <div class="name">
+        <p>Made by:</p>
+        <p>Sacha Terry</p>
+      </div>
+    </footer>
+  </body>
+</html>

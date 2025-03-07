@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <title>Movies</title>
+</head>
+<body>
+    <div class="movie-list-container">
+        <div th:each="movie : ${movies}" class="movie-item">
+            <div class="movie-image">
+                <img th:src="@{/images/cat.png}" alt="ねこ" />
+            </div>
+            <div th:text="${movie.name}" class="movie-title">Movie Title</div>
+            <div th:text="${movie.releaseDate}" class="movie-release-date">Release Date: 12/12/2023</div>
+            <div th:text="${movie.rating}" class="movie-rating">Rating: 8.5</div>
+            <!-- <a th:href="@{/movies/{movieId}(id=${movie.movieId})}" class="btn">View Details</a> -->
+            <a th:href="@{/movies/{id}(id=${movie.id})}" class="btn">View Details</a>
+
+        </div>
+        <!-- Repeat for other movies -->
+    </div>
+</body>
+</html>

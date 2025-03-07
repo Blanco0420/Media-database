@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="${media.name}"></title>
+  </head>
+  <body>
+    <div class="media-detail">
+      <h3>Title:</h3>
+      <p th:text="${media.name}">media asdasdad name</p>
+      <h3>Release Date:</h3>
+      <p th:text="${media.releaseDate}"></p>
+      <h3>Rating:</h3>
+      <p th:text="${media.rating}"></p>
+      <div class="people">
+        <div th:each="personRole : ${media.personRoles}" class="people">
+          <div class="person">
+            <div th:if="${personRole.role} != 'director'">
+              <p
+                th:text="${personRole.person.firstName} + ' ' + ${personRole.person.lastName}"
+              ></p>
+              <p th:text="${personRole.role}"></p>
+            </div>
+          </div>
+          <!-- <div th:switch= "${personRole.role}">
+                        <p th:case= "actor">Actor</p>
+                        <p th:case= "director">Director</p>
+                    </div> -->
+        </div>
+        <form th:action="@{${id}+'/'+'delete'}" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <button type="submit" th:text="|Delete ${type}?|"></button>
+        </form>
+        <!-- <div class="directors-wrapper">
+                <p>Directors:</p>
+                <div th:each="director : ${media.directors}" class="directors">
+                    <div th:text="${director.firstName}"></div>
+                </div>
+            </div> -->
+      </div>
+    </div>
+  </body>
+</html>
