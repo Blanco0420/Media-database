@@ -29,6 +29,7 @@ export const Media = () => {
   // if (error) return <p>{error}</p>;
   return (
     <div>
+      {/* TODO: make passing the mediaItems object easier instead of passing 2 different variables */}
       {mediaItems.length > 1 ? (
         mediaItems.map((media) => (
           <div className="mb-4 last:mb-0">

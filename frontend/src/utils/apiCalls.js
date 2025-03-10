@@ -24,3 +24,5 @@ export const backendGet = async (type, id) => {
     }
   }
 };
+
+export const updateValue = (id, field) => {};
