@@ -4,13 +4,13 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class TvShowModel extends MediaModel {
-    // private int seasons;
+    private int seasons;
 
-    // public int getSeasons() {
-    //     return seasons;
-    // }
+    public int getSeasons() {
+        return seasons;
+    }
 
-    // public void setSeasons(int seasons) {
-    //     this.seasons = seasons;
-    // }
+    public void setSeasons(int seasons) {
+        this.seasons = seasons;
+    }
 }

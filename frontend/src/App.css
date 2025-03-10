@@ -1,0 +1,4 @@
+@plugin "daisyui" {
+  themes: winter --default dark --prefersdark, dracula;
+}
+@import "tailwindcss";

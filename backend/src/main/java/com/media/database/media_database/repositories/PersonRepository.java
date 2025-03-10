@@ -9,5 +9,5 @@ import com.media.database.media_database.models.PersonModel;
 
 @Repository
 public interface PersonRepository extends JpaRepository<PersonModel, Long> {
-    Optional<PersonModel> findByFirstNameAndLastName(String firstName, String lastName);
+    Optional<PersonModel> findFirstByFirstNameAndLastName(String firstName, String lastName);
 }

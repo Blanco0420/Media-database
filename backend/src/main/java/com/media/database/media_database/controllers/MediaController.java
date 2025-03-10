@@ -23,11 +23,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("api/media")
+@CrossOrigin(origins = "http://localhost:5173")
 public class MediaController {
 
     @Autowired
@@ -50,52 +53,89 @@ public class MediaController {
         }
     }
 
-    // @GetMapping("")
-    // public String getHome() {
-    // return "addMedia";
-    // }
-
     @GetMapping("{type}")
     public ResponseEntity<List<?>> getAllMedia(@PathVariable String type) {
         MediaService<?> service = getServiceType(type);
         return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
-        // model.addAttribute("medias", service.getAll());
-        // model.addAttribute("type", type);
     }
 
     @GetMapping("{type}/{id}")
     public ResponseEntity<?> getMediaById(@PathVariable String type, @PathVariable Long id) {
         MediaService<?> service = getServiceType(type);
         return ResponseEntity.status(HttpStatus.OK).body(service.getById(id));
-        // model.addAttribute("type", type);
-        // model.addAttribute("media", service.getById(id));
-        // return "media";
     }
 
     @PostMapping("{type}/new")
     public ResponseEntity<?> createNewMedia(@PathVariable String type, @RequestBody Map<String, Object> mediaModel) {
+        return handleMediaOperation(type, mediaModel, false, null);
+    }
+
+    @PutMapping("{type}/update/{id}")
+    public ResponseEntity<?> updateMedia(@PathVariable String type, @PathVariable Long id,
+            @RequestBody Map<String, Object> mediaModel) {
+        return handleMediaOperation(type, mediaModel, true, id);
+    }
+
+    private ResponseEntity<?> handleMediaOperation(String type, Map<String, Object> mediaModel, boolean isUpdate,
+            Long id) {
         ObjectMapper om = new ObjectMapper();
+
         if ("movie".equalsIgnoreCase(type)) {
             MovieService service = (MovieService) getServiceType(type);
             MovieModel movieModel = om.convertValue(mediaModel, MovieModel.class);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.create(movieModel));
+            return isUpdate ? service.update(id, movieModel) : service.create(movieModel);
+
         } else if ("tv".equalsIgnoreCase(type)) {
             TvShowService service = (TvShowService) getServiceType(type);
             TvShowModel tvShowModel = om.convertValue(mediaModel, TvShowModel.class);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.create(tvShowModel));
+            return isUpdate ? service.update(id, tvShowModel) : service.create(tvShowModel);
+
         } else if ("anime".equalsIgnoreCase(type)) {
             AnimeService service = (AnimeService) getServiceType(type);
             AnimeModel animeModel = om.convertValue(mediaModel, AnimeModel.class);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.create(animeModel));
+            return isUpdate ? service.update(id, animeModel) : service.create(animeModel);
         }
+
         return ResponseEntity.badRequest().build();
     }
+
+    // @PostMapping("{type}/new")
+    // public ResponseEntity<?> createNewMedia(@PathVariable String type,
+    // @RequestBody Map<String, Object> mediaModel) {
+    // ObjectMapper om = new ObjectMapper();
+    // if ("movie".equalsIgnoreCase(type)) {
+    // MovieService service = (MovieService) getServiceType(type);
+    // MovieModel movieModel = om.convertValue(mediaModel, MovieModel.class);
+    // return service.create(movieModel);
+
+    // } else if ("tv".equalsIgnoreCase(type)) {
+    // TvShowService service = (TvShowService) getServiceType(type);
+    // TvShowModel tvShowModel = om.convertValue(mediaModel, TvShowModel.class);
+    // return service.create(tvShowModel);
+
+    // } else if ("anime".equalsIgnoreCase(type)) {
+
+    // AnimeService service = (AnimeService) getServiceType(type);
+    // AnimeModel animeModel = om.convertValue(mediaModel, AnimeModel.class);
+    // return service.create(animeModel);
+    // }
+    // return ResponseEntity.badRequest().build();
+
+    // }
 
     @PostMapping("{type}/{id}/delete")
     public ResponseEntity<Void> removeMediaById(@PathVariable String type, @PathVariable Long id) {
         MediaService<?> service = getServiceType(type);
         return service.deleteMedia(id);
     }
+
+    // @PostMapping("{type}/{id}/update")
+    // public String updateMedia(@PathVariable String type, @PathVariable Long id,
+    // @RequestBody String entity) {
+    // // TODO: process PUT request
+
+    // return entity;
+    // }
 
     // @PostMapping("")
     // public RequestEntity<MediaModel> postMethodName(@RequestParam String type,

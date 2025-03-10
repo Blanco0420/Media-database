@@ -3,6 +3,7 @@ package com.media.database.media_database.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.media.database.media_database.exceptions.MediaNotFoundException;
@@ -39,10 +40,10 @@ public class MediaService<T extends MediaModel> {
     }
 
     // TODO: Check if movie is all the same
-    public T create(T media) {
+    public ResponseEntity<T> create(T media) {
         boolean exists = repository.existsByName(media.getName());
         if (exists) {
-            throw new EntityExistsException();
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         // else{
         // return repository.save(movie);
@@ -50,7 +51,7 @@ public class MediaService<T extends MediaModel> {
         for (PersonRoleModel personRole : media.getPersonRoles()) {
             PersonModel person = personRole.getPerson();
             PersonModel existingPerson = personRepository
-                    .findByFirstNameAndLastName(person.getFirstName(), person.getLastName())
+                    .findFirstByFirstNameAndLastName(person.getFirstName(), person.getLastName())
                     .orElseGet(() -> personRepository.save(person));
             // person.setId(existingPerson.getId());
             personRole.setPerson(existingPerson);
@@ -64,20 +65,31 @@ public class MediaService<T extends MediaModel> {
         // director.setId(existingDirector.getId());
         // }
 
-        return repository.save(media);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(repository.save(media));
 
     }
 
-    // public T updateMedia(Long id, T mediaModel) {
-    // return repository.findById(id).map(media -> {
-    // media.setName(mediaModel.getName());
-    // media.setReleaseDate(mediaModel.getReleaseDate());
-    // media.setPeople(mediaModel.getPeople());
-    // media.setRating(mediaModel.getRating());
-    // return repository.save(media);
-    // })
-    // .orElseThrow(() -> new MovieNotFoundException());
-    // }
+    public ResponseEntity<T> update(Long id, T mediaModel) {
+        return repository.findById(id).map(media -> {
+            media.setName(mediaModel.getName());
+            media.setReleaseDate(mediaModel.getReleaseDate());
+            media.setRating(mediaModel.getRating());
+
+            media.getPersonRoles().clear();
+            for (PersonRoleModel personRole : mediaModel.getPersonRoles()) {
+                PersonModel person = personRole.getPerson();
+                PersonModel existingPerson = personRepository
+                        .findFirstByFirstNameAndLastName(person.getFirstName(), person.getLastName())
+                        .orElseGet(() -> personRepository.save(person));
+
+                personRole.setPerson(existingPerson);
+                personRole.setMedia(media);
+                media.getPersonRoles().add(personRole);
+            }
+
+            return ResponseEntity.ok(repository.save(media));
+        }).orElseThrow(() -> new MediaNotFoundException(id));
+    }
 
     public ResponseEntity<Void> deleteMedia(Long id) {
         if (repository.existsById(id)) {
