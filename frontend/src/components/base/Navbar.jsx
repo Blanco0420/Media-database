@@ -1,5 +1,6 @@
 import React from "react";
 import { PanelTopOpen } from "lucide-react";
+import { Link, NavLink } from "react-router";
 
 export const Navbar = ({ items }) => {
   return (
@@ -21,20 +22,20 @@ export const Navbar = ({ items }) => {
                   <ul className="p-2">
                     {item.submenu.map((subItem, subIndex) => (
                       <li key={subIndex}>
-                        <a>{subItem.label}</a>
+                        <NavLink to={subItem.dest}>{subItem.label}</NavLink>
                       </li>
                     ))}
                   </ul>
                 </li>
               ) : (
                 <li key={index}>
-                  <a>{item.label}</a>
+                  <NavLink to={item.dest}>{item.label}</NavLink>
                 </li>
               )
             )}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Media Database</a>
+        <Link to={"/"} className="btn btn-ghost text-xl">Media Database</Link>
         {/* </div> */}
 
         {/* Center: Desktop Horizontal Menu */}
@@ -48,7 +49,7 @@ export const Navbar = ({ items }) => {
                   <ul className="p-2">
                     {item.submenu.map((subItem, subIndex) => (
                       <li key={subIndex}>
-                        <a>{subItem.label}</a>
+                        <NavLink to={subItem.dest}>{subItem.label}</NavLink>
                       </li>
                     ))}
                   </ul>
@@ -56,7 +57,7 @@ export const Navbar = ({ items }) => {
               </li>
             ) : (
               <li key={index}>
-                <a>{item.label}</a>
+                <NavLink to={item.dest}>{item.label}</NavLink>
               </li>
             )
           )}

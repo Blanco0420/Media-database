@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.media.database.media_database.exceptions.MediaNotFoundException;
 import com.media.database.media_database.models.MediaModel;
-import com.media.database.media_database.models.PersonModel;
+import com.media.database.media_database.models.MediaPersonModel;
 import com.media.database.media_database.models.joinTables.PersonRoleModel;
 import com.media.database.media_database.repositories.MediaRepository;
 import com.media.database.media_database.repositories.PersonRepository;
@@ -49,8 +49,8 @@ public class MediaService<T extends MediaModel> {
         // return repository.save(movie);
         // }
         for (PersonRoleModel personRole : media.getPersonRoles()) {
-            PersonModel person = personRole.getPerson();
-            PersonModel existingPerson = personRepository
+            MediaPersonModel person = personRole.getPerson();
+            MediaPersonModel existingPerson = personRepository
                     .findFirstByFirstNameAndLastName(person.getFirstName(), person.getLastName())
                     .orElseGet(() -> personRepository.save(person));
             // person.setId(existingPerson.getId());
@@ -77,8 +77,8 @@ public class MediaService<T extends MediaModel> {
 
             media.getPersonRoles().clear();
             for (PersonRoleModel personRole : mediaModel.getPersonRoles()) {
-                PersonModel person = personRole.getPerson();
-                PersonModel existingPerson = personRepository
+                MediaPersonModel person = personRole.getPerson();
+                MediaPersonModel existingPerson = personRepository
                         .findFirstByFirstNameAndLastName(person.getFirstName(), person.getLastName())
                         .orElseGet(() -> personRepository.save(person));
 

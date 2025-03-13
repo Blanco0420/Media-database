@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.media.database.media_database.models.PersonModel;
+import com.media.database.media_database.models.MediaPersonModel;
 import com.media.database.media_database.repositories.PersonRepository;
 
 @Controller
@@ -19,7 +19,7 @@ public class PersonController {
     PersonRepository personRepository;
 
     @GetMapping("")
-    public @ResponseBody List<PersonModel> getAllPeople() {
+    public @ResponseBody List<MediaPersonModel> getAllPeople() {
         return personRepository.findAll();
     }
 }

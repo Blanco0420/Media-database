@@ -7,14 +7,16 @@ import { Router } from "react-router";
 import { Routes } from "react-router";
 import { Home } from "./Pages/Home";
 import { Route } from "react-router";
+import { NewMovieForm } from "./components/NewMovieForm";
 
 function App() {
   return (
     <>
       <Routes>
         <Route element={<Layout />}>
-          {/* <Route index element={<Home />} /> */}
-          <Route path=":type/:id?" element={<Media />}></Route>
+          <Route index element={<Home />} />
+          <Route path=":type/:id?" element={<Media />} />
+          <Route path=":type/new" element={<NewMovieForm />} />
         </Route>
       </Routes>
       {/* <Navbar /> */}

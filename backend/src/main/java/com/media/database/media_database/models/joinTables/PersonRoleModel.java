@@ -1,9 +1,9 @@
 package com.media.database.media_database.models.joinTables;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.media.database.enums.Role;
+import com.media.database.media_database.enums.AvailableRoles;
 import com.media.database.media_database.models.MediaModel;
-import com.media.database.media_database.models.PersonModel;
+import com.media.database.media_database.models.MediaPersonModel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,7 +22,7 @@ public class PersonRoleModel {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private PersonModel person;
+    private MediaPersonModel person;
 
     @ManyToOne
     @JoinColumn(name = "media_id")
@@ -30,17 +30,17 @@ public class PersonRoleModel {
     private MediaModel media;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private AvailableRoles role;
 
     public Long getId() {
         return id;
     }
 
-    public PersonModel getPerson() {
+    public MediaPersonModel getPerson() {
         return person;
     }
 
-    public void setPerson(PersonModel person) {
+    public void setPerson(MediaPersonModel person) {
         this.person = person;
     }
 
@@ -52,11 +52,11 @@ public class PersonRoleModel {
         this.media = media;
     }
 
-    public Role getRole() {
+    public AvailableRoles getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(AvailableRoles role) {
         this.role = role;
     }
 }
