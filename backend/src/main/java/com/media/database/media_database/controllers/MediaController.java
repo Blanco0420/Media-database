@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@RequestMapping("api/media")
-@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/media")
+// @CrossOrigin(origins = "http://localhost:5173")
 public class MediaController {
 
     @Autowired
