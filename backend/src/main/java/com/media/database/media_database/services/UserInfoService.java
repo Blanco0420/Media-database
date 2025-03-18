@@ -26,14 +26,22 @@ public class UserInfoService implements UserDetailsService {
         Optional<UserInfo> userDetail = repository.findByUsername(username); // Assuming 'email' is used as username
 
         // Converting UserInfo to UserDetails
-        return userDetail.map(UserInfoDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        // return userDetail.map(UserInfoDetails::new)
+        //         .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        UserInfo userInfo = userDetail.orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        return new UserInfoDetails(userInfo);
     }
 
-    public String addUser(UserInfo userInfo) {
+    public boolean  addUser(UserInfo userInfo) {
         // Encode password before saving the user
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
+        try{
         repository.save(userInfo);
-        return "User Added Successfully";
+        return true;
+        }
+        catch(Exception e){
+            System.out.println("Error in saving user: " + e.getMessage());
+            throw e;
+        }
     }
 }
