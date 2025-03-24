@@ -13,7 +13,6 @@ import com.media.database.media_database.models.joinTables.PersonRoleModel;
 import com.media.database.media_database.repositories.MediaRepository;
 import com.media.database.media_database.repositories.PersonRepository;
 
-import jakarta.persistence.EntityExistsException;
 
 public class MediaService<T extends MediaModel> {
     private final MediaRepository<T> repository;

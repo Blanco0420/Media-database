@@ -2,23 +2,19 @@ package com.media.database.media_database.config;
 
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import com.media.database.media_database.auth.ApiKeyAuthFilter;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +28,7 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .addFilterBefore(apiKeyAuthFilter, UsernamePasswordAuthenticationFilter.class)
         .authorizeHttpRequests(req ->{
             req.requestMatchers("/api/**").authenticated()
@@ -40,5 +37,31 @@ public class SecurityConfig {
 
         return http.build();
 
+    }
+
+    @Bean
+    public CorsFilter corsFilter(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(false);
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedMethods(List.of("GET", "POST"));
+        config.setAllowedHeaders(List.of("x-api-key"));
+
+        source.registerCorsConfiguration("/api/**", config);
+        return new CorsFilter(source);
+    }
+    
+    @Bean
+    public UrlBasedCorsConfigurationSource corsConfigurationSource(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("x-api-key"));
+        config.setAllowCredentials(false);
+
+        source.registerCorsConfiguration("/api/**", config);
+        return source;
     }
 }

@@ -1,7 +1,6 @@
 package com.media.database.media_database.auth;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Value;

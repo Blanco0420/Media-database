@@ -1,5 +1,5 @@
 # Devenv
-.devenv*
+**.devenv*
 devenv.local.nix
 
 # direnv
@@ -7,3 +7,14 @@ devenv.local.nix
 
 # pre-commit
 .pre-commit-config.yaml
+
+.vscode
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.lock
+
+# direnv
+.direnv
+.envrc

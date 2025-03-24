@@ -3,10 +3,8 @@ package com.media.database.media_database.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.media.database.media_database.exceptions.MediaNotFoundException;
 import com.media.database.media_database.exceptions.MediaTypeNotFoundException;
 import com.media.database.media_database.models.AnimeModel;
-import com.media.database.media_database.models.MediaModel;
 import com.media.database.media_database.models.MovieModel;
 import com.media.database.media_database.models.TvShowModel;
 import com.media.database.media_database.services.AnimeService;
@@ -23,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
