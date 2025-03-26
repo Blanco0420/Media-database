@@ -1,6 +1,6 @@
 import { Rating } from "@smastrom/react-rating";
 
-export const CustomRating = ({ rating, setRating }) => {
+export const CustomRating = ({ value, onChange }) => {
   // const [rating, setRating] = useState(_rating);
 
   // useEffect(() => {
@@ -10,8 +10,8 @@ export const CustomRating = ({ rating, setRating }) => {
     <Rating
       style={{ maxWidth: 200 }}
       spaceBetween={"small"}
-      value={rating}
-      onChange={setRating}
+      value={value}
+      onChange={(value) => onChange(value)}
     />
   );
 };

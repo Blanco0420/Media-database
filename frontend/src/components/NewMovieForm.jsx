@@ -12,6 +12,12 @@ import { FormProvider, useForm } from "./Context/FormContext";
 //   console.log(x);
 // };
 
+const labelsAndVariableName = {
+  Name: "name",
+  "Release Date": "releaseDate",
+  Description: "description",
+};
+
 export const FieldSetTemplate = ({ optional = false, label, children }) => {
   const [inputValue, setInputValue] = useState("");
   const [hasNoValue, setHasNoValue] = useState(false);
@@ -20,9 +26,12 @@ export const FieldSetTemplate = ({ optional = false, label, children }) => {
     // console.log(mediaItem.get("name"));
     // backendPostMedia;
     const value = e.target.value;
+    console.log(e);
+    console.log(value);
+
     setFormData((prev) => ({
       ...prev,
-      [label]: value,
+      [labelsAndVariableName[label]]: value,
     }));
   };
 
@@ -40,16 +49,20 @@ export const FieldSetTemplate = ({ optional = false, label, children }) => {
     <>
       <fieldset className="fieldset p-2">
         <legend className="fieldset-legend">{label}</legend>
-        {React.cloneElement(children, {
-          onChange: handleChange,
-          value: formData[label] || "",
+        {label == "Rating" ? (
+          <>{children}</>
+        ) : (
+          React.cloneElement(children, {
+            onChange: handleChange,
+            value: formData[labelsAndVariableName[label]],
 
-          // value: inputValue,
-          // onChange: handleInputChange,
-          className: `${children.props.className} w-full min-h-9 ${
-            hasNoValue ? `${children.type}-error` : ""
-          }`,
-        })}
+            // value: inputValue,
+            // onChange: handleInputChange,
+            className: `${children.props.className} w-full min-h-9 ${
+              hasNoValue ? `${children.type}-error` : ""
+            }`,
+          })
+        )}
         {optional && <div className="fieldset-label">Optional</div>}
         {hasNoValue && (
           <div className="fieldset-label">
@@ -66,13 +79,13 @@ export const NewMovieForm = () => {
   const [date, setDate] = useState();
   const [rating, setRating] = useState(0);
   const [people, setPeople] = useState([]);
-  const [filteredPeople, setFilteredPeople] = useState([]);
+  const [filteredPeople, setFilteredPeople] = useState([{ people: {} }]);
   const { formData, setFormData } = useForm();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let data = await backendGetPeople("actor");
+        let data = await backendGetPeople();
         setPeople(data);
       } catch (err) {
         console.log(err);
@@ -84,7 +97,14 @@ export const NewMovieForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    backendPostMedia(formData);
+    console.log(formData);
+    setFormData((prev) => ({
+      ...prev,
+      rating: rating,
+      personRole: {},
+    }));
+    console.log(filteredPeople);
+    // backendPostMedia("movie",formData);
   };
 
   return (
@@ -108,10 +128,13 @@ export const NewMovieForm = () => {
             <input type="date" className="input w-full" />
           </FieldSetTemplate>
           {/* Rating */}
-          <div className="flex flex-col">
+          <FieldSetTemplate label={"Rating"}>
+            <CustomRating value={rating} onChange={setRating} />
+          </FieldSetTemplate>
+          {/* <div className="flex flex-col">
             <label className="text-white mb-1">Rating</label>
             <CustomRating rating={rating} setRating={setRating} />
-          </div>
+          </div> */}
         </div>
         {/* Buttons */}
         <div className="flex gap-4">
