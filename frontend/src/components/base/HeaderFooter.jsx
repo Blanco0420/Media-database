@@ -2,8 +2,15 @@ import React from "react";
 import { Navbar } from "./Navbar";
 
 var items = [
-  { label: "Test", submenu: [{ label: "submenuTest", dest: "" }] },
-  { label: "Test2", dest: "" },
+  {
+    label: "Media",
+    submenu: [
+      { label: "Movies", dest: "/movie" },
+      { label: "TV", dest: "/tv" },
+      { label: "Anime", dest: "/anime" },
+    ],
+  },
+  // { label: "New Media", dest: ":typ/new" },
   { label: "Movie", dest: "/movie" },
 ];
 

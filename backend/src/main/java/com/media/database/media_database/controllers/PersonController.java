@@ -16,7 +16,7 @@ import com.media.database.media_database.models.MediaPersonModel;
 import com.media.database.media_database.services.PersonService;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person")
 public class PersonController {
 
     @Autowired

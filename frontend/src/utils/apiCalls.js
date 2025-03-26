@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const baseApiUrl = "http://localhost:8080/api/media";
+const baseApiUrl = "http://192.168.0.8:8080";
 
 /**
  *
  * @param {string} type - Type of media to request (tv, movie, anime)
  * @returns {Promise<any>} - Promise response wth data
  */
-export const backendGet = async (type, id) => {
-  let url = `${baseApiUrl}/${type}${id ? `/${id}` : ""}`;
+export const backendGetMedia = async (type, id) => {
+  let url = `${baseApiUrl}/api/media/${type}${id ? `/${id}` : ""}`;
   try {
     let res = await axios.get(url, {
       headers: {
@@ -24,9 +24,24 @@ export const backendGet = async (type, id) => {
     } else if (err.request) {
       console.log(err.request);
     } else {
-      console.log("API ELSE BLOCK");
+      console.error("API ELSE BLOCK");
     }
   }
+};
+
+export const backendGetPeople = async ({ role }) => {
+  let url = `${baseApiUrl}/api/person${role ? `?role=${role}` : ""}`;
+  let res = await axios.get(url, {
+    headers: {
+      "x-api-key": "my-api-key",
+    },
+  });
+  return res.data;
+};
+
+export const backendPostMedia = async (type, mediaItem) => {
+  let url = `${baseApiUrl}/api/media/${type}/new`;
+  console.log(await axios.post(url, mediaItem));
 };
 
 export const updateValue = (id, field) => {};

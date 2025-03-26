@@ -23,8 +23,8 @@ public class MediaPersonModel {
     private String firstName;
     private String lastName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
-    private Date dob;
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
+    // private Date dob;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PersonRoleModel> personRoles = new ArrayList<>();
@@ -69,12 +69,12 @@ public class MediaPersonModel {
         this.lastName = lastName;
     }
 
-    public Date getDob() {
-        return dob;
-    }
+    // public Date getDob() {
+    //     return dob;
+    // }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
+    // public void setDob(Date dob) {
+    //     this.dob = dob;
+    // }
 
 }

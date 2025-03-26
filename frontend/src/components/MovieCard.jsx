@@ -26,17 +26,17 @@ const statusColors = {
   },
 };
 
-export const MovieCard = ({ item }) => {
-  const { id, name, description, rating, watchStatus } = item;
+export const MovieCard = ({item }) => {
+  const { name, description, rating, watchStatus } = item;
   const { statusName, bg, icon } = statusColors[watchStatus] || {
     bg: "bg-gray-500",
     icon: null,
   };
   return (
-    <div key={id} className="card card-side bg-gray-400 shadow-sm">
+    <div className="card card-side bg-gray-400 shadow-sm">
       <div className="">
         <figure className="border-2 rounded-2xl max-w-48">
-          <img src={image} id={id} alt={name} />
+          <img src={image} alt={name} />
         </figure>
       </div>
       <div className="card-body">

@@ -2,10 +2,11 @@
 
 {
   # https://devenv.sh/basics/
-  env.GREET = "devenv";
+  # env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [bun nodejs_23 dbeaver-bin postman];
+  packages = with pkgs; [bun nodejs_23 dbeaver-bin maven  postman];
+  languages.java.enable = true;
   languages.javascript.enable = true;
 
   # https://devenv.sh/languages/
@@ -18,14 +19,14 @@
   # services.postgres.enable = true;
 
   # https://devenv.sh/scripts/
-  scripts.hello.exec = ''
-    echo hello from $GREET
-  '';
+  # scripts.hello.exec = ''
+  #   echo hello from $GREET
+  # '';
 
-  enterShell = ''
-    hello
-    git --version
-  '';
+  # enterShell = ''
+  #   hello
+  #   git --version
+  # '';
 
   # https://devenv.sh/tasks/
   # tasks = {
@@ -34,10 +35,10 @@
   # };
 
   # https://devenv.sh/tests/
-  enterTest = ''
-    echo "Running tests"
-    git --version | grep --color=auto "${pkgs.git.version}"
-  '';
+  # enterTest = ''
+  #   echo "Running tests"
+  #   git --version | grep --color=auto "${pkgs.git.version}"
+  # '';
 
   # https://devenv.sh/git-hooks/
   # git-hooks.hooks.shellcheck.enable = true;

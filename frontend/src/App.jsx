@@ -8,6 +8,7 @@ import { Routes } from "react-router";
 import { Home } from "./Pages/Home";
 import { Route } from "react-router";
 import { NewMovieForm } from "./components/NewMovieForm";
+import { FormProvider } from "./components/Context/FormContext";
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path=":type/:id?" element={<Media />} />
-          <Route path=":type/new" element={<NewMovieForm />} />
+          <Route
+            path=":type/new"
+            element={
+              <FormProvider>
+                <NewMovieForm />
+              </FormProvider>
+            }
+          />
         </Route>
       </Routes>
       {/* <Navbar /> */}

@@ -64,7 +64,7 @@ public class MediaService<T extends MediaModel> {
         // director.setId(existingDirector.getId());
         // }
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(repository.save(media));
+        return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(media));
 
     }
 

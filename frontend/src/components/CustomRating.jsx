@@ -1,15 +1,17 @@
 import { Rating } from "@smastrom/react-rating";
-import { useEffect } from "react";
-import { useState } from "react";
 
-export const CustomRating = ({ _rating }) => {
-  const [rating, setRating] = useState(_rating);
+export const CustomRating = ({ rating, setRating }) => {
+  // const [rating, setRating] = useState(_rating);
 
   // useEffect(() => {
   //   setRating(rating);
   // }, [rating]);
-
   return (
-    <Rating style={{ maxWidth: 130 }} value={rating} onChange={setRating} />
+    <Rating
+      style={{ maxWidth: 200 }}
+      spaceBetween={"small"}
+      value={rating}
+      onChange={setRating}
+    />
   );
 };
