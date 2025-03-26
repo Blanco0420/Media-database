@@ -31,11 +31,12 @@ export const backendGetMedia = async (type, id) => {
   }
 };
 
-export const backendGetPeople = async ({ role }) => {
+export const backendGetPeople = async (role) => {
   let url = `${baseApiUrl}/api/person${role ? `?role=${role}` : ""}`;
   let res = await axios.get(url, {
     headers: headers
   });
+  console.log(url, res)
   return res.data;
 };
 

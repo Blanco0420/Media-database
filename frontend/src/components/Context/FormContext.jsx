@@ -8,7 +8,8 @@ export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    releaseDate: new Date(),
+    releaseDate: "",
+    personRole: [],
     rating: 0,
   });
 
