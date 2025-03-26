@@ -1,6 +1,10 @@
 import axios from "axios";
 
 const baseApiUrl = "http://192.168.0.8:8080";
+const headers = {
+  "x-api-key": "my-api-key",
+}
+
 
 /**
  *
@@ -11,9 +15,7 @@ export const backendGetMedia = async (type, id) => {
   let url = `${baseApiUrl}/api/media/${type}${id ? `/${id}` : ""}`;
   try {
     let res = await axios.get(url, {
-      headers: {
-        "x-api-key": "my-api-key",
-      },
+      headers: headers
     });
     return res.data;
   } catch (err) {
@@ -32,16 +34,16 @@ export const backendGetMedia = async (type, id) => {
 export const backendGetPeople = async ({ role }) => {
   let url = `${baseApiUrl}/api/person${role ? `?role=${role}` : ""}`;
   let res = await axios.get(url, {
-    headers: {
-      "x-api-key": "my-api-key",
-    },
+    headers: headers
   });
   return res.data;
 };
 
 export const backendPostMedia = async (type, mediaItem) => {
   let url = `${baseApiUrl}/api/media/${type}/new`;
-  console.log(await axios.post(url, mediaItem));
+  console.log(await axios.post(url, mediaItem, {
+    headers: headers
+  }));
 };
 
 export const updateValue = (id, field) => {};
