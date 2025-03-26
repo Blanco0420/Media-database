@@ -15,6 +15,4 @@ import com.media.database.media_database.models.MediaPersonModel;
 public interface PersonRepository extends JpaRepository<MediaPersonModel, Long> {
     Optional<MediaPersonModel> findFirstByFirstNameAndLastName(String firstName, String lastName);
 
-    @Query("SELECT p FROM MediaPersonModel p JOIN p.personRoles pr WHERE pr.role = :role")
-    List<MediaPersonModel> findByRole(@Param("role") AvailableRoles role);
 }

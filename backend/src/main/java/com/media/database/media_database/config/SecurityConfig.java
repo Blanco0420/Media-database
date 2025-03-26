@@ -46,7 +46,7 @@ public class SecurityConfig {
         config.setAllowCredentials(false);
         config.setAllowedOrigins(List.of("http://192.168.0.28:5173", "http://localhost:5173"));
         config.setAllowedMethods(List.of("GET", "POST"));
-        config.setAllowedHeaders(List.of("x-api-key"));
+        config.setAllowedHeaders(List.of("x-api-key", "content-type"));
 
         source.registerCorsConfiguration("/api/**", config);
         return new CorsFilter(source);
@@ -58,7 +58,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:5173", "http://192.168.0.28:5173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT"));
-        config.setAllowedHeaders(List.of("x-api-key"));
+        config.setAllowedHeaders(List.of("x-api-key", "content-type"));
         config.setAllowCredentials(false);
 
         source.registerCorsConfiguration("/api/**", config);

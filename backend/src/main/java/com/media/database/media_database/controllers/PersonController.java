@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.media.database.media_database.exceptions.RoleNotFoundException;
 import com.media.database.media_database.enums.AvailableRoles;
 import com.media.database.media_database.models.MediaPersonModel;
+import com.media.database.media_database.models.dto.MediaPersonDTO;
 import com.media.database.media_database.services.PersonService;
 
 @RestController
@@ -23,7 +24,7 @@ public class PersonController {
     PersonService personService;
 
     @GetMapping("")
-    public ResponseEntity<List<MediaPersonModel>> getAllPeople(@RequestParam(required = false) String role) {
+    public ResponseEntity<MediaPersonDTO> getAllPeople(@RequestParam(required = false) String role) {
         if(role != null){
             switch (role) {
                 case "actor":

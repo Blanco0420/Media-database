@@ -8,23 +8,34 @@ import org.springframework.stereotype.Service;
 
 import com.media.database.media_database.enums.AvailableRoles;
 import com.media.database.media_database.models.MediaPersonModel;
+import com.media.database.media_database.models.dto.MediaPersonDTO;
+import com.media.database.media_database.models.joinTables.PersonRoleModel;
 import com.media.database.media_database.repositories.PersonRepository;
+import com.media.database.media_database.repositories.PersonRoleRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PersonService {
     @Autowired
-    private PersonRepository personRepository;
+    private PersonRoleRepository personRoleRepository;
 
-    public List<MediaPersonModel> getAllPeople(){
-        return personRepository.findAll();
+    public MediaPersonDTO getAllPeople() {
+        List<PersonRoleModel> personRoles = personRoleRepository.findAll();
+        return new MediaPersonDTO(personRoles);
     }
 
-    public List<MediaPersonModel> getAllByRole(AvailableRoles role) {
-
-        return personRepository.findByRole(role);
+    public MediaPersonDTO getAllByRole(AvailableRoles role) {
+        List<PersonRoleModel> personRoles = personRoleRepository.findByRole(role);
+        return new MediaPersonDTO(personRoles);
     }
 
-    public Optional<MediaPersonModel> getActorById(Long id) {
-        return personRepository.findById(id);
-    }
+    public MediaPersonDTO getActorById(Long id) {
+    PersonRoleModel personRole = personRoleRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("PersonRoleModel not found with ID: " + id));
+
+    return new MediaPersonDTO(personRole);
 }
+
+}
+
