@@ -25,7 +25,7 @@ public class MediaModel {
 
     private String description;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd")
     private Date releaseDate;
     private double rating;
 
